@@ -1,24 +1,21 @@
-# from selenium import webdriver
-# from selenium.webdriver.common.keys import Keys
-# import time
-# import pyperclip
-
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import time
 from bs4 import BeautifulSoup as bs
 import requests
 
-#google 에서 'beautiful 검색창' 으로 검색하기
-
 try:
     #네이버카페 검색 / 키워드:김포 / 영역:제목 / 등록기간:1일 
-    URL = 'https://cafe.naver.com/ca-fe/home/search/articles?q=%EA%B9%80%ED%8F%AC&se=1&pr=1'
-    result = requests.get(URL)
-    html = result.text
-    soup = bs(html, "html.parser")
-    print(soup)
+    driver = webdriver.Chrome()
+    url = 'https://cafe.naver.com/ca-fe/home/search/articles?q=%EA%B9%80%ED%8F%AC&se=1&pr=1'
+    driver.get(url)
+    driver.implicitly_wait(3)
 
+    html = driver.page_source
+    soup = bs(html, 'html.parser')
 
-    #list = soup.select('a.item_subject')
-    #print(len(list))
+    list = soup.select('.article_item')
+    print(list[0])
 
     #for article in articles:
     #    print(article.get_text())
